@@ -1,7 +1,9 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const routes = require('./routes/loginRoute.js')
+const loginRoutes = require('./routes/loginRoute.js')
+const adminRoutes = require('./routes/adminRoute.js')
+const userRoutes = require('./routes/userRoute.js')
 const port = 3030;
 const connectDB = require('./database/database.js')
 const cors = require('cors')
@@ -14,7 +16,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/',routes)
+app.use('/',loginRoutes)
+app.use('/admin', adminRoutes); // Prefix all admin routes with '/admin'
+app.use('/user', userRoutes); // Prefix all admin routes with '/admin'
 const start = async() => {
   try {
     await connectDB()

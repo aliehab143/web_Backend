@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const login = require('./Login')
+const login = require('../model/loginModel');
 
 const getAllLogin = async (req,res) => {
     const temp = await login.find()
@@ -31,36 +31,38 @@ const logIn = async(req,res) =>{
 }
 async function getAccountByUsername(username) {
     try {
-        const isUsername = await login.findOne({username});
+        const isUsername = await login.findOne({ username });
         console.log(isUsername); // Log the result
         return isUsername;
     } catch (error) {
-        req.status(500).json('unvaild json')
-        
+        console.log(error); // Log the error
+        return null; // Return null in case of error
     }
 }
 
-const signup = async (req,res)=>{
+const signup = async (req, res) => {
     try {
         const data = {
-            name:req.body.username,
-            password:req.body.password
-        }
-        console.log(data)
-        const existingUser = await getAccountByUsername(data.name); 
-        console.log(existingUser)
+            name: req.body.username,
+            password: req.body.password
+        };
+        console.log(data);
+        const existingUser = await getAccountByUsername(data.name);
+        console.log(existingUser);
 
         if (existingUser) {
-            res.status(234).json("This username is taken")
+            res.status(234).json("This username is taken");
         } else {
             const account = await login.create(req.body);
-            res.status(200).json({account});
+            res.status(200).json({ account });
         }
-    
+
     } catch (error) {
-        res.status(400).json('error2')
+        console.log(error);
+        res.status(400).json('error2');
     }
-}
+};
+
 module.exports = {
     getAllLogin,
     getLoginByUsername: getAccountByUsername,

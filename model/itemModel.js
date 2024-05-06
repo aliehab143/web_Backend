@@ -17,10 +17,17 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: [true, 'must provide category'],
     },
-    Sizes: [String], // Assuming sizes is an array of strings
+    Sizes: String, // Assuming sizes is an array of strings
     Image: {
         type: String,
-        default: null, // Assuming you want to default to null if no image is provided
+        validate: {
+            validator: function(value) {
+                // Regular expression for URL validation
+                const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+                return urlRegex.test(value);
+            },
+            message: props => `${props.value} is not a valid URL!`
+        }
     }
 });
 
