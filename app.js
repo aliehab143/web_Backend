@@ -4,6 +4,7 @@ const app = express()
 const loginRoutes = require('./routes/loginRoute.js')
 const adminRoutes = require('./routes/adminRoute.js')
 const userRoutes = require('./routes/userRoute.js')
+const orderRoutes = require('./routes/order.js')
 const port = 3030;
 const connectDB = require('./database/database.js')
 const cors = require('cors')
@@ -19,6 +20,8 @@ app.use(function(req, res, next) {
 app.use('/',loginRoutes)
 app.use('/admin', adminRoutes); // Prefix all admin routes with '/admin'
 app.use('/user', userRoutes); // Prefix all admin routes with '/admin'
+app.use('/order',orderRoutes)
+
 const start = async() => {
   try {
     await connectDB()
