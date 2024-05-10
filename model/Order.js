@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const Order = mongoose.Schema({
-    userId:{type:String, required:true},
-    products: [
+    loginName:{type:String, required:true},
+    orderData: [
         {
           productId:{
                 type:String, 
@@ -12,13 +12,17 @@ const Order = mongoose.Schema({
                 type: Number,
                 default: 1,
             },
+            size: {
+                type: String,
+                default: true,
+            },
         }
         
     ],
     city:{type:String},
     country:{type:String},
     street:{type:String},
-    phoneNumber:{type:Number},
+    phoneNumber:{type:Number}
 })
 
 module.exports = mongoose.model('Order',Order)
