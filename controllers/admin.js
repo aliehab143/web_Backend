@@ -16,7 +16,8 @@ const addItem = async (req, res) => {
         };
         console.log(data);
         const account = await item.create(data);
-        res.status(200).json({ account });
+        console.log(account)
+        res.status(200).json({account});
 
     } catch (error) {
         console.log(error);
